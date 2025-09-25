@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Мультфильмы</title>
+<style>
+  body {
+    font-family: Montserrat, sans-serif;
+    background: linear-gradient(135deg, #0f0f23 0, #1a1a2e 50%, #16213e 100%);
+    color: #eee;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .project {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    margin-bottom: 30px;
+  }
+  .project h2 {
+    color: #00bfa5;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .project-info {
+    margin-bottom: 20px;
+  }
+  .project-image img {
+    max-width: 350px;
+    width: 100%;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 2px solid rgba(0,191,165,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    transition: all 0.4s ease;
+  }
+  .project-image img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 50px rgba(0,191,165,0.3);
+    border-color: rgba(0,191,165,0.5);
+  }
+
+  /* Модальное окно */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0,191,165,0.3);
+  }
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #00bfa5;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0,191,165,0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  .close:hover {
+    background: #00bfa5;
+    color: white;
+    transform: rotate(90deg);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Другие проекты мультфильмов -->
+  <div class="project">
+    <h2>1. Мультфильм 1 Название</h2>
+    <div class="project-info">
+      <p>Описание мультфильма 1...</p>
+    </div>
+    <div class="project-image">
+      <img src="image1.jpg" alt="Мультфильм 1" onclick="openModal(this.src)">
+    </div>
+  </div>
+
+  <div class="project">
+    <h2>2. Мультфильм 2 Название</h2>
+    <div class="project-info">
+      <p>Описание мультфильма 2...</p>
+    </div>
+    <div class="project-image">
+      <img src="image2.jpg" alt="Мультфильм 2" onclick="openModal(this.src)">
+    </div>
+  </div>
+
+  <div class="project">
+    <h2>3. Мультфильм 3 Название</h2>
+    <div class="project-info">
+      <p>Описание мультфильма 3...</p>
+    </div>
+    <div class="project-image">
+      <img src="image3.jpg" alt="Мультфильм 3" onclick="openModal(this.src)">
+    </div>
+  </div>
+
+  <!-- Добавлен 4-й мультфильм -->
+  <div class="project">
+    <h2>4. Начало Руси</h2>
+    <div class="project-info">
+      <p>Историческая анимация с персонажами и эффектом снега, около 1 минуты.</p>
+      <p><b>Технический процесс:</b> Видео и эффекты созданы в Veo 3, изображения nano banano, стилизация midjourney, монтаж в Sony Vegas.</p>
+      <p><b>Особенности:</b> Исторический контекст, эпические сцены, детализированные костюмы и атмосфера древней Руси.</p>
+    </div>
+    <div class="project-image">
+      <img src="image4.jpg" alt="Начало Руси" onclick="openModal(this.src)">
+    </div>
+  </div>
+
+</div>
+
+<!-- Модальное окно для увеличения изображений -->
+<div id="modal" class="modal" onclick="closeModal(event)">
+  <span class="close" onclick="closeModal(event)">&times;</span>
+  <img id="modalImage" class="modal-content" src="">
+</div>
+
+<script>
+  function openModal(src) {
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    modal.style.display = 'flex';
+    modalImage.src = src;
+  }
+
+  function closeModal(event) {
+    if(event.target.id === 'modal' || event.target.className === 'close'){
+      document.getElementById('modal').style.display = 'none';
+    }
+  }
+</script>
+</body>
+</html>
