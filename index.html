@@ -1,164 +1,261 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Мультфильмы</title>
-<style>
-  body {
-    font-family: Montserrat, sans-serif;
-    background: linear-gradient(135deg, #0f0f23 0, #1a1a2e 50%, #16213e 100%);
-    color: #eee;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  .project {
-    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    margin-bottom: 30px;
-  }
-  .project h2 {
-    color: #00bfa5;
-    font-size: 2.2em;
-    margin-bottom: 20px;
-    font-weight: 600;
-  }
-  .project-info {
-    margin-bottom: 20px;
-  }
-  .project-image img {
-    max-width: 350px;
-    width: 100%;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 2px solid rgba(0,191,165,0.2);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    transition: all 0.4s ease;
-  }
-  .project-image img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 25px 50px rgba(0,191,165,0.3);
-    border-color: rgba(0,191,165,0.5);
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Мультфильмы</title>
+  <link rel="icon" href="data:image/svg+xml,..." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
 
-  /* Модальное окно */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0; top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    backdrop-filter: blur(10px);
-    justify-content: center;
-    align-items: center;
-  }
-  .modal-content {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 15px;
-    box-shadow: 0 25px 50px rgba(0,191,165,0.3);
-  }
-  .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #00bfa5;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    background: rgba(0,191,165,0.2);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-  }
-  .close:hover {
-    background: #00bfa5;
-    color: white;
-    transform: rotate(90deg);
-  }
-</style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+      color: #eee;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 60px 0;
+      background: linear-gradient(45deg, rgba(0, 191, 165, 0.1), rgba(77, 208, 225, 0.1));
+      border-radius: 20px;
+      margin-bottom: 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header h1 {
+      font-weight: 700;
+      font-size: 3rem;
+      color: #00bfa5;
+      text-shadow: 0 0 10px #00bfa5;
+    }
+
+    section.project {
+      background: linear-gradient(135deg, #121622, #1b2231);
+      border-radius: 25px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 40px rgba(0, 191, 165, 0.3);
+    }
+
+    section.project h2 {
+      font-weight: 700;
+      font-size: 2rem;
+      color: #00bfa5;
+      text-shadow: 0 0 10px #00bfa5;
+      margin-bottom: 20px;
+    }
+
+    section.project p {
+      font-weight: 300;
+      margin-bottom: 15px;
+    }
+
+    section.project .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      margin-bottom: 25px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 191, 165, 0.4);
+    }
+
+    section.project .video-wrapper iframe,
+    section.project .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    .screenshots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .screenshots img {
+      cursor: pointer;
+      border-radius: 15px;
+      max-width: 300px;
+      box-shadow: 0 15px 35px rgba(0, 191, 165, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .screenshots img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Модальное окно для увеличения скриншотов */
+    #modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 191, 165, 0.7);
+    }
+
+    #modal-close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      user-select: none;
+      background: rgba(0, 191, 165, 0.2);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    #modal-close:hover {
+      background: #00bfa5;
+      color: white;
+      transform: rotate(90deg);
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
+  <div class="container">
+    <header class="header">
+      <h1>Мои мультфильмы</h1>
+    </header>
 
-  <!-- Другие проекты мультфильмов -->
-  <div class="project">
-    <h2>1. Мультфильм 1 Название</h2>
-    <div class="project-info">
-      <p>Описание мультфильма 1...</p>
-    </div>
-    <div class="project-image">
-      <img src="image1.jpg" alt="Мультфильм 1" onclick="openModal(this.src)">
-    </div>
-  </div>
+    <!-- Первый мультфильм -->
+    <section class="project">
+      <h2>1. Атмосферное видео с ночной сценой</h2>
+      <div class="video-wrapper">
+        <video controls>
+          <source src="video1.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <p><b>Опыт:</b> 1 год работы с AI-генерацией и созданием видео.</p>
+      <p><b>Технический процесс:</b> Генерация и обработка видео в Veo 3, создание изображений в nano banano и midjourney, монтаж в Sony Vegas.</p>
+      <p><b>Особенности:</b> Магическая атмосфера с мерцающими огоньками, плавные переходы и кинематографичная подача материала.</p>
 
-  <div class="project">
-    <h2>2. Мультфильм 2 Название</h2>
-    <div class="project-info">
-      <p>Описание мультфильма 2...</p>
-    </div>
-    <div class="project-image">
-      <img src="image2.jpg" alt="Мультфильм 2" onclick="openModal(this.src)">
-    </div>
-  </div>
+      <div class="screenshots">
+        <img src="image1.jpg" alt="Скриншот 1" onclick="openModal(this.src)">
+        <img src="image2.jpg" alt="Скриншот 2" onclick="openModal(this.src)">
+        <img src="image3.jpg" alt="Скриншот 3" onclick="openModal(this.src)">
+      </div>
+    </section>
 
-  <div class="project">
-    <h2>3. Мультфильм 3 Название</h2>
-    <div class="project-info">
-      <p>Описание мультфильма 3...</p>
-    </div>
-    <div class="project-image">
-      <img src="image3.jpg" alt="Мультфильм 3" onclick="openModal(this.src)">
-    </div>
-  </div>
+    <!-- Второй мультфильм -->
+    <section class="project">
+      <h2>2. Ролик с атмосферой ожидания поезда</h2>
+      <div class="video-wrapper">
+        <video controls>
+          <source src="video2.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <p><b>Технический процесс:</b> Видео сгенерировано в Veo 3, визуальная стилизация nano banano и midjourney, монтаж и озвучка в Sony Vegas.</p>
+      <p><b>Особенности:</b> Эмоциональная глубина, реалистичная анимация персонажа, атмосферное освещение станции.</p>
 
-  <!-- Добавлен 4-й мультфильм -->
-  <div class="project">
-    <h2>4. Начало Руси</h2>
-    <div class="project-info">
-      <p>Историческая анимация с персонажами и эффектом снега, около 1 минуты.</p>
+      <div class="screenshots">
+        <img src="image4.jpg" alt="Скриншот 1" onclick="openModal(this.src)">
+        <img src="image5.jpg" alt="Скриншот 2" onclick="openModal(this.src)">
+      </div>
+    </section>
+
+    <!-- Третий мультфильм -->
+    <section class="project">
+      <h2>3. Демонстрация движения персонажа и лесной атмосферы</h2>
+      <div class="video-wrapper">
+        <video controls>
+          <source src="video3.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <p><b>Технический процесс:</b> 3D модели и сцены сгенерированы в nano banano, видео в Veo 3, монтаж в Sony Vegas.</p>
+      <p><b>Особенности:</b> Динамичные боевые сцены, детализированная анимация движений, реалистичная лесная среда.</p>
+
+      <div class="screenshots">
+        <img src="image6.jpg" alt="Скриншот 1" onclick="openModal(this.src)">
+      </div>
+    </section>
+
+    <!-- Четвертый мультфильм - добавлен -->
+    <section class="project">
+      <h2>4. Начало Руси</h2>
+      <div class="video-wrapper">
+        <video controls>
+          <source src="video4.mp4" type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      </div>
+      <p><b>Историческая анимация с персонажами и эффектом снега, около 1 минуты.</b></p>
       <p><b>Технический процесс:</b> Видео и эффекты созданы в Veo 3, изображения nano banano, стилизация midjourney, монтаж в Sony Vegas.</p>
       <p><b>Особенности:</b> Исторический контекст, эпические сцены, детализированные костюмы и атмосфера древней Руси.</p>
-    </div>
-    <div class="project-image">
-      <img src="image4.jpg" alt="Начало Руси" onclick="openModal(this.src)">
-    </div>
+
+      <div class="screenshots">
+        <img src="image7.jpg" alt="Начало Руси 1" onclick="openModal(this.src)">
+        <img src="image8.jpg" alt="Начало Руси 2" onclick="openModal(this.src)">
+        <img src="image9.jpg" alt="Начало Руси 3" onclick="openModal(this.src)">
+      </div>
+    </section>
   </div>
 
-</div>
+  <!-- Модальное окно для увеличения скриншотов -->
+  <div id="modal" onclick="closeModal(event)">
+    <span id="modal-close" onclick="closeModal(event)">&times;</span>
+    <img id="modal-img" src="" alt="Увеличенное изображение" />
+  </div>
 
-<!-- Модальное окно для увеличения изображений -->
-<div id="modal" class="modal" onclick="closeModal(event)">
-  <span class="close" onclick="closeModal(event)">&times;</span>
-  <img id="modalImage" class="modal-content" src="">
-</div>
-
-<script>
-  function openModal(src) {
-    const modal = document.getElementById('modal');
-    const modalImage = document.getElementById('modalImage');
-    modal.style.display = 'flex';
-    modalImage.src = src;
-  }
-
-  function closeModal(event) {
-    if(event.target.id === 'modal' || event.target.className === 'close'){
-      document.getElementById('modal').style.display = 'none';
+  <script>
+    function openModal(src) {
+      const modal = document.getElementById('modal');
+      const modalImg = document.getElementById('modal-img');
+      modal.style.display = 'flex';
+      modalImg.src = src;
     }
-  }
-</script>
+
+    function closeModal(event) {
+      if (event.target.id === 'modal' || event.target.id === 'modal-close') {
+        document.getElementById('modal').style.display = 'none';
+      }
+    }
+  </script>
 </body>
+
 </html>
